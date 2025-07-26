@@ -3,6 +3,7 @@ import os
 from openai import OpenAI
 
 print("🔑 Loaded Key:", os.getenv("OPENROUTER_API_KEY"))
+print("Model to use:", "openai/gpt-3.5-turbo")
 
 app = FastAPI()
 
@@ -21,7 +22,7 @@ def summarize_emails():
     prompt = f"Summarize the following emails:\n\n{emails}"
 
     response = client.chat.completions.create(
-        model="deepseek-chat",
+        model="openai/gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Summarize these emails professionally."},
             {"role": "user", "content": prompt}
