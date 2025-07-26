@@ -1,16 +1,12 @@
 from fastapi import FastAPI
 import os
 from openai import OpenAI
-from dotenv import load_dotenv
 
-load_dotenv()
 app = FastAPI()
 
-print("Loaded API Key:", os.getenv("OPENROUTER_API_KEY"))
-
 client = OpenAI(
-    api_key=os.getenv("OPENROUTER_API_KEY"),
-    base_url="https://openrouter.ai/api/v1"  # OpenRouter URL
+    api_key=os.getenv("OPENROUTER_API_KEY"),  # Must be set in Render dashboard
+    base_url="https://openrouter.ai/api/v1"
 )
 
 @app.get("/summarize-emails")
@@ -23,7 +19,7 @@ def summarize_emails():
     prompt = f"Summarize the following emails:\n\n{emails}"
 
     response = client.chat.completions.create(
-        model="deepseek-chat",  # or try "openai/gpt-3.5-turbo"
+        model="deepseek-chat",
         messages=[
             {"role": "system", "content": "Summarize these emails professionally."},
             {"role": "user", "content": prompt}
