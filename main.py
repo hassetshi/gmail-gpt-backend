@@ -2,6 +2,8 @@ from fastapi import FastAPI
 import os
 from openai import OpenAI
 
+print("🔑 Loaded Key:", os.getenv("OPENROUTER_API_KEY"))
+
 app = FastAPI()
 
 client = OpenAI(
