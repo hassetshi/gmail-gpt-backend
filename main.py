@@ -21,7 +21,7 @@ def summarize_emails():
     prompt = f"Summarize the following emails:\n\n{emails}"
 
     response = client.chat.completions.create(
-        model="deepseek-chat",
+        model="deepseek-ai/deepseek-chat",
         messages=[
             {"role": "system", "content": "Summarize these emails professionally."},
             {"role": "user", "content": prompt}
