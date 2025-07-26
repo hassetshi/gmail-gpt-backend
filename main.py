@@ -1,11 +1,13 @@
+
 from fastapi import FastAPI
-import openai
+from openai import OpenAI
 import os
 from dotenv import load_dotenv
 
 app = FastAPI()
 load_dotenv()
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 @app.get("/summarize-emails")
 def summarize_emails():
@@ -15,12 +17,12 @@ def summarize_emails():
     3. Jane submitted the blog draft for approval.
     '''
     prompt = f"Summarize the following emails:\n\n{emails}"
-    response = openai.ChatCompletion.create(
+    response = client.chat.completions.create(
         model="gpt-4",
         messages=[
             {"role": "system", "content": "Summarize these emails professionally."},
             {"role": "user", "content": prompt}
         ]
     )
-    summary = response['choices'][0]['message']['content']
+    summary = response.choices[0].message.content
     return {"summary": summary}
