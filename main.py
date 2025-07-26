@@ -9,6 +9,10 @@ load_dotenv()
 
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
+@app.get("/")
+def root():
+    return {"status": "✅ Gmail-GPT backend is running!"}
+
 @app.get("/summarize-emails")
 def summarize_emails():
     emails = '''
