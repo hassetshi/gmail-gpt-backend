@@ -1,11 +1,20 @@
 from fastapi import FastAPI
 import os
 from openai import OpenAI
+from fastapi.middleware.cors import CORSMiddleware
 
 print("🔑 Loaded Key:", os.getenv("OPENROUTER_API_KEY"))
 print("Model to use:", "deepseek/deepseek-r1:free")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or set to ["http://localhost:3000"] to restrict
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 client = OpenAI(
     api_key=os.getenv("OPENROUTER_API_KEY"),  # Must be set in Render dashboard
